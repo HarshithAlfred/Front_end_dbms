@@ -49,10 +49,21 @@ button {
 button:hover {
   border-color: #646cff;
 }
+body {
+  display: flex;
+  justify-content: center;
+  border:2px solid yellow;
+  
+  margin: 0;
+}
+
+
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
+
 
 @media (prefers-color-scheme: light) {
   :root {
@@ -64,5 +75,16 @@ button:focus-visible {
   }
   button {
     background-color: #f9f9f9;
+  }
+}
+@keyframes rotate {
+  0%{
+    transform: rotate(0deg);
+  }
+  100%{
+   
+      transform: rotate(100deg);
+    
+    
   }
 }
