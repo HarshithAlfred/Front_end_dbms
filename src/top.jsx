@@ -1,10 +1,11 @@
 import React from "react";
+import "./App.css"
 import myImage from './assets/pngwing.com.png'
 function head(){
     return (
         <>
          
-        <h1 className='base'><img src={myImage} alt="Factory" style={{ width: '60px', height: 'auto' }} /> Factory Data Base</h1>
+        <h1 className='basse'><img src={myImage} alt="Factory" style={{ width: '60px', height: 'auto' }} /> Factory Data Base</h1>
         <marquee> <h3>####     Jagdish U Aradhya 67 #### Mohammad Kaif 94 #### Mahesh R 85 #### Harshith Alfred 193 </h3> </marquee>
         </>
     

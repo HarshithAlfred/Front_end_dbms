@@ -6,6 +6,7 @@ import axios from 'axios'
 function App(){
   
   const API_Url=import.meta.env.VITE_APIURL;
+  const [isLoading, setIsLoading] = useState(false);
   const [formdata,setformdata]=useState({
     id:"",
     names:"",
@@ -27,9 +28,12 @@ function App(){
   
   try{
     e.preventDefault();
+    setIsLoading(true);
     const response= await axios.post(`${API_Url}/home`,formdata);
+    setIsLoading(false);
     console.log(response.data)
     if(response.data===true){
+       
        alert("Data Entered into DB");
     }
     
@@ -53,7 +57,8 @@ function App(){
  }
   return (
     <>
-     <h2 className='base'>* INSERTION SECTION</h2>
+  
+     <h2 className='base'>  * INSERTION SECTION</h2>
       <Container>
       
       <Form onSubmit={handle}>
@@ -92,7 +97,7 @@ function App(){
           <Form.Control type="number" required name="payrate" value={formdata.payrate} onChange={handlechange}></Form.Control>
         </Form.Group>
 
-     <h3>* At Which Factory Branch this Employee <span className='unique'>{formdata.names}</span> Works </h3>
+     <h3> * At Which Factory Branch this Employee <span className='unique'>{formdata.names}</span> Works </h3>
         <Form.Group>
           <Form.Label>
             Factory Branch ID:
@@ -106,21 +111,22 @@ function App(){
           </Form.Label>
           <Form.Control type="string"  name="faccity" value={formdata.faccity} onChange={handlechange}></Form.Control>
         </Form.Group>
-        <h3>* Production team this Employee <span className='unique'>{formdata.names}</span> Belongs </h3>
+        <h3> * Production team this Employee <span className='unique'>{formdata.names}</span> Belongs </h3>
         <Form.Group>
           <Form.Label>
-            Vender Part:
+            Vendor Part:
           </Form.Label>
           <Form.Control as="select"  name="vendpart" value={formdata.vendpart} onChange={handlechange}>
           <option value="">Select a vendor part</option>
-          <option value="car_engine">Car Engine</option>
-          <option value="car_body">Car Body</option>
-          <option value="car_tires">Car Tires</option>
-          <option value="car_interior">Car Interior</option>
+          <option value="Car Engine">Car Engine</option>
+          <option value="Car Body">Car Body</option>
+          <option value="Car Tires">Car Tires</option>
+          <option value="Car Interior">Car Interior</option>
           </Form.Control>
         </Form.Group>
         
-        <Button varient='primary' type="submit">Insert</Button>
+        <Button variant="primary "disabled={isLoading} type="submit"><span className='loader'style={{ display: isLoading ? 'inline-flex' : 'none' }}></span>{isLoading?'':"Insert"}</Button>
+       
       </Form>
       </Container>
         
