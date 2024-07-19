@@ -1,8 +1,11 @@
 :root {
+  margin: 2px;
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
-  font-weight: 400;
-
+  font-weight: 400;  
+  position: relative;
+  z-index: 10;
+  
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
@@ -11,6 +14,7 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  
 }
 
 a {
@@ -52,8 +56,12 @@ button:hover {
 body {
   display: flex;
   justify-content: center;
-  border:2px solid yellow;
-  
+  /* background-color: yellow; */
+  background: transparent;
+  border: 5px solid transparent;
+  border-image: linear-gradient(45deg, yellow 20%, black 80%);
+  border-image-slice: 1;
+ 
   margin: 0;
 }
 
@@ -65,7 +73,7 @@ button:focus-visible {
 }
 
 
-@media (prefers-color-scheme: light) {
+/* @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
     background-color: #ffffff;
@@ -76,15 +84,24 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
-}
+} */
 @keyframes rotate {
-  0%{
-    transform: rotate(0deg);
+  0% {
+    background: linear-gradient(45deg, yellow, black);
   }
-  100%{
-   
-      transform: rotate(100deg);
-    
-    
+  100% {
+    background: linear-gradient(405deg, yellow, black);
+  }
+
+}
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
   }
 }

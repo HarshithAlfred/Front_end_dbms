@@ -43,3 +43,22 @@ label{
         color: #0087ca;
         transition: 0.25s all;
     }
+    .unique {
+        color: rgb(250, 250, 3); /* Change color */
+        font-weight: bold; /* Make it bold */
+        text-decoration: underline; /* Underline the text */
+         /* Italicize the text */
+    }
+    select {
+        background-color: black;
+        color: yellow;
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+      }
+      
+      select option {
+        background-color: rgb(41, 40, 40);
+        color:yellow;
+      }

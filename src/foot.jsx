@@ -76,6 +76,10 @@ return(
                         <strong>|  Position |</strong> {emp.Position} |<br />
                         <strong>|  Pay Rate |</strong> {emp.Payrate} |<br/>
                         <strong>|  Pay Type |</strong> {emp.Paytype} |<br />
+                        <hr style={{ color: 'yellow', backgroundColor: 'yellow', height: '2px', border: 'none' }}/>
+                        <strong>|  Factory ID |</strong> {emp.Factoryid} |<br />
+                        <strong>|  Factory City |</strong> {emp.Factorycity} |<br />
+                        <strong>|  Vendor part |</strong> {emp.Vendorpart} |<br />
                         <p>--------------------------------------</p>
                         
                     </li>

@@ -12,6 +12,9 @@ function App(){
     position:"",
     paytype:"",
     payrate:"",
+    facid:"",
+    faccity:"",
+    vendpart:""
   });
   const handlechange=(e)=>{
     const {name,value}=e.target;
@@ -38,7 +41,10 @@ function App(){
       names: "",
       position: "",
       payrate: "",
-      paytype: ""
+      paytype: "",
+      facid:"",
+    faccity:"",
+    vendpart:""
   });
   }  
    catch(e){
@@ -86,6 +92,33 @@ function App(){
           <Form.Control type="number" required name="payrate" value={formdata.payrate} onChange={handlechange}></Form.Control>
         </Form.Group>
 
+     <h3>* At Which Factory Branch this Employee <span className='unique'>{formdata.names}</span> Works </h3>
+        <Form.Group>
+          <Form.Label>
+            Factory Branch ID:
+          </Form.Label>
+          <Form.Control type="number" required name="facid" value={formdata.facid} onChange={handlechange}></Form.Control>
+        </Form.Group>
+           
+        <Form.Group>
+          <Form.Label>
+            Factory Branch City:
+          </Form.Label>
+          <Form.Control type="string"  name="faccity" value={formdata.faccity} onChange={handlechange}></Form.Control>
+        </Form.Group>
+        <h3>* Production team this Employee <span className='unique'>{formdata.names}</span> Belongs </h3>
+        <Form.Group>
+          <Form.Label>
+            Vender Part:
+          </Form.Label>
+          <Form.Control as="select"  name="vendpart" value={formdata.vendpart} onChange={handlechange}>
+          <option value="">Select a vendor part</option>
+          <option value="car_engine">Car Engine</option>
+          <option value="car_body">Car Body</option>
+          <option value="car_tires">Car Tires</option>
+          <option value="car_interior">Car Interior</option>
+          </Form.Control>
+        </Form.Group>
         
         <Button varient='primary' type="submit">Insert</Button>
       </Form>
