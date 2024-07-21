@@ -9,7 +9,7 @@ label{
 .form-control{
     text-decoration: none;
     background:transparent;
-    border-bottom: 2px solid yellow;
+    border-bottom: 2px solid var(--y);
     width:100%;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
@@ -29,12 +29,18 @@ label{
     outline: none;
 }
 #root{
-    --y:yellow;
+    --y:rgb(176, 6, 243);
 }
+.underline-purple {
+    text-underline-offset: 3px;
+    text-decoration: underline;
+    text-decoration-color: var(--y);
+    text-decoration-thickness: 2px; /* Adjust thickness as needed */
+  }
 .btn-primary{
     width: 100%;
     
-    color: yellow;
+    color: var(--y);
     border-radius: 10px;
     margin-bottom: 15px;
     border: 1px solid  #333435;
@@ -43,9 +49,9 @@ label{
     margin-top: 8px;
 }
 .btn-primary:active{
-    --y:black;
-    border: 1px solid yellow;
-    background-color: yellow;
+    border: 1px solid var(--y);
+    background-color:rgb(176, 6, 243);;
+    --y:#333435;
     color:  #333435;
 }
 
@@ -57,14 +63,14 @@ label{
         transition: 0.25s all;
     }
     .unique {
-        color: rgb(250, 250, 3); /* Change color */
+        color: var(--y); /* Change color */
         font-weight: bold; /* Make it bold */
         text-decoration: underline; /* Underline the text */
          /* Italicize the text */
     }
     select {
         background-color:  #333435;
-        color: yellow;
+        color: var(--y);
         padding: 5px;
         border: 1px solid #ccc;
         border-radius: 4px;
@@ -73,7 +79,7 @@ label{
       
       select option {
         background-color:  #333435;
-        color:yellow;
+        color:var(--y);
       }
       @media (max-width: 400px) {
         .basse{font-size: 2.5em;}

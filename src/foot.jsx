@@ -1,106 +1,156 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
-import './App.css'
-import { Form ,Button, Container } from "react-bootstrap";
-import axios from 'axios'
-function foot(){
-    const API_Url=import.meta.env.VITE_APIURL;
-    const [isLoading, setIsLoading] = useState(false);
-    const [isdLoading, setIsdLoading] = useState(false);
-    const [emp,setemp]=useState([]);
-    const [del,setdel]=useState({
-        del:""
-    });
-    const [qori,setqori]=useState({
-        qori:""
-    });
-    const handle=(e)=>{
-        let {name,value}=e.target;
-        setqori({
-         ...qori,
-         [name]:value});
-     }
-     const delfun=(e)=>{
-        let {name,value}=e.target;
-        setdel({
-            ...del,[name]:value
-        });
-     }
-    const deletion=async (e)=>
-    {
-        e.preventDefault();
-        try{
-            setIsdLoading(true);
-            const resp=await axios.delete(`${API_Url}/delete/${del.del}`);
-            setIsdLoading(false);
-            console.log(resp.data);
-            if(resp.data===true){alert(`ID ${del.del} Tuple Deleted `)}
-            if(resp.data===false){alert("ID Not Found")}
-            setdel({ del: '' });
-        }
-        catch(e){console.log(e);}
+import React, { useState, useEffect } from 'react';
+import { Container, Spinner, Alert, Button, ListGroup } from 'react-bootstrap';
+import { supabase } from '../public/super'; // Ensure this path is correct
+import './App.css';  // Make sure to include your CSS file
+
+// Main Component to display data from all tables
+function Foot() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [employees, setEmployees] = useState([]);
+  const [factories, setFactories] = useState([]);
+  const [assemblyLines, setAssemblyLines] = useState([]);
+  const [vendors, setVendors] = useState([]);
+  const [parts, setParts] = useState([]);
+  const [models, setModels] = useState([]);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const [
+        { data: empData, error: empError }, 
+        { data: facData, error: facError },
+        { data: assemData, error: assemError },
+        { data: vendorData, error: vendorError },
+        { data: partData, error: partError },
+        { data: modelData, error: modelError }
+      ] = await Promise.all([
+        supabase.from('employee').select('*'),
+        supabase.from('factory').select('*'),
+        supabase.from('assembly_line').select('*'),
+        supabase.from('vendor').select('*'),
+        supabase.from('part').select('*'),
+        supabase.from('model').select('*')
+      ]);
+
+      if (empError || facError || assemError || vendorError || partError || modelError) {
+        throw new Error('Error fetching data from one or more tables');
+      }
+
+      setEmployees(empData);
+      setFactories(facData);
+      setAssemblyLines(assemData);
+      setVendors(vendorData);
+      setParts(partData);
+      setModels(modelData);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      setError('Error fetching data from the database');
+    } finally {
+      setIsLoading(false);
     }
-    const retrive=async (e)=>
-    {
-        e.preventDefault();
-        try{
-            setIsLoading(true);
-           const response =await axios.post(`${API_Url}/search`,qori);
-            setIsLoading(false);
-           if(response.data!==false){
-           setemp(response.data)}
-           if(response.data===false){
-            alert('No ID Found');
-            setemp([]);
-           }
-            
-           setqori({
-                qori: ""
-             });
-        }
-        catch(e){console.log(e)}
-    }
-    
-return(
-    <>
-    <h2 className='base'>* DISPLAY SECTION</h2>
+  };
+
+  return (
     <Container>
-     <Form onSubmit={retrive}>
-        <Form.Control type='textarea' placeholder="Eg. 1" value={qori.qori} name="qori" onChange={handle}></Form.Control>
-    <Button variant="primary " disabled={isLoading} type="submit"><span className='loader'style={{ display: isLoading ? 'inline-flex' : 'none' }}></span>{isLoading?'':"Fetch"}</Button>
-    </Form>
+
+        <h2 className='basse'>Details</h2>
+      <Button variant="primary" onClick={fetchData} className="my-3">
+      <span className='loader'style={{ display: isLoading ? 'inline-flex' : 'none' }}></span>{isLoading?'':'Fetch Data'}</Button>
+
+      {isLoading ? (
+        <Spinner animation="border" role="status">
+          
+        </Spinner>
+      ) : error ? (
+        <Alert variant="danger">{error}</Alert>
+      ) : (
+        <>          <h2 className='underline-purple'>Employee Data</h2>
+          <ListGroup>
+            {employees.map((employee) => (
+              <ListGroup.Item key={employee.id}>
+                <strong>ID:</strong> {employee.id} <br />
+                <strong>Name:</strong> {employee.name} <br />
+                <strong>Position:</strong> {employee.position} <br />
+                <strong>Pay Rate:</strong> {employee.pay_rate} <br />
+                <strong>Pay Type:</strong> {employee.pay_type} <br />
+                <strong>Supervisor ID:</strong> {employee.supervisor_id}
+                <hr/>
+              </ListGroup.Item>
+            ))}
+          </ListGroup>
+
+          <h2 className='underline-purple'>Factory Data</h2>
+          <ListGroup>
+            {factories.map((factory) => (
+              <ListGroup.Item key={factory.id}>
+                <strong>ID:</strong> {factory.id} <br />
+                <strong>Name:</strong> {factory.name} <br />
+                <strong>City:</strong> {factory.city} <br />
+                <strong>Throughput:</strong> {factory.throughput}
+                <hr/>
+              </ListGroup.Item>
+            ))}
+          </ListGroup>
+
+          <h2 className='underline-purple'>Assembly Line Data</h2>
+          <ListGroup>
+            {assemblyLines.map((line) => (
+              <ListGroup.Item key={line.number}>
+                <strong>Number:</strong> {line.number} <br />
+                <strong>Throughput:</strong> {line.throughput} <br />
+                <strong>Factory ID:</strong> {line.factory_id}
+                <hr/>
+              </ListGroup.Item>
+            ))}
+          </ListGroup>
+
+          <h2  className='underline-purple'>Vendor Data</h2>
+          <ListGroup>
+            {vendors.map((vendor) => (
+              <ListGroup.Item key={vendor.id}>
+                <strong>ID:</strong> {vendor.id} <br />
+                <strong>Name:</strong> {vendor.name} <br />
+                <strong>Email:</strong> {vendor.email} <br />
+                <strong>Phone:</strong> {vendor.phone}
+                <hr/>
+              </ListGroup.Item>
+            ))}
+          </ListGroup>
+
+          <h2  className='underline-purple'>Part Data</h2>
+          <ListGroup>
+            {parts.map((part) => (
+              <ListGroup.Item key={part.id}>
+                <strong>Number:</strong> {part.part_number} <br />
+                <strong>Description:</strong> {part.description}
+                <hr/>
+              </ListGroup.Item>
+            ))}
+          </ListGroup>
+
+          <h2 className='underline-purple'>Model Data</h2>
+          <ListGroup>
+            {models.map((model) => (
+              <ListGroup.Item key={model.id}>
+                <strong>ID:</strong> {model.id} <br />
+                <strong>Name:</strong> {model.name} <br />
+                <strong>Number:</strong> {model.number} <br />
+                <strong>Type:</strong> {model.type} <br />
+                <strong>Application:</strong> {model.application}
+                <hr/>
+              </ListGroup.Item>
+            ))}
+          </ListGroup>
+        </>
+      )}
     </Container>
-    <div>
-            <h1 className="basse">Employee List</h1>
-            <ul>
-                {emp.map(emp=> (
-                    <li key={emp._id}>
-                        <hr/>
-                        <p>--------------------------------------</p>
-                        <strong>|Employee ID|</strong> {emp.EmployeeId} |<br />
-                        <strong>|    Name   |</strong> {emp.EmployeeName} |<br />
-                        <strong>|  Position |</strong> {emp.Position} |<br />
-                        <strong>|  Pay Rate |</strong> {emp.Payrate} |<br/>
-                        <strong>|  Pay Type |</strong> {emp.Paytype} |<br />
-                        <hr style={{ color: 'yellow', backgroundColor: 'yellow', height: '2px', border: 'none' }}/>
-                        <strong>|  Factory ID |</strong> {emp.Factoryid} |<br />
-                        <strong>|  Factory City |</strong> {emp.Factorycity} |<br />
-                        <strong>|  Vendor part |</strong> {emp.Vendorpart} |<br />
-                        <p>--------------------------------------</p>
-                        
-                    </li>
-                    
-                ))}
-            </ul>
-        </div>
-        <h2 className='base'>* DELETE SECTION</h2>
-    <Container>
-     <Form onSubmit={deletion}>
-        <Form.Control type='textarea' placeholder="Eg. 1" required value={del.del} name="del" onChange={delfun}></Form.Control>
-        <Button variant="primary " disabled={isdLoading} type="submit"><span className='loader'style={{ display: isdLoading ? 'inline-flex' : 'none' }}></span>{isdLoading?'':"Delete"}</Button>
-    </Form>
-    </Container>
-    </>
-)
-};
-export default foot
+  );
+}
+
+export default Foot;

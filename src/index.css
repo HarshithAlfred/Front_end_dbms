@@ -55,28 +55,30 @@ body {
   display: flex;
   justify-content: center;
   /* background-color: yellow; */
+  --y:rgb(176, 6, 243);
   background: transparent;
-  border: 1.5px solid transparent;
+  border: 2.5px solid transparent;
   margin: 0;
   animation: borderAnimation 4s infinite; /* Animation duration and loop */
 }
 
 /* Keyframes for border animation */
 @keyframes borderAnimation {
+  
   0% {
-    border-color: yellow yellow yellow yellow; /* Start with yellow on top */
+    border-color:var(--y) var(--y) var(--y) var(--y); /* Start with yellow on top */
   }
   25% {
     border-color: transparent transparent transparent transparent; /* Move yellow to right */
   }
   50% {
-    border-color: yellow yellow yellow yellow; /* Yellow on all sides */
+    border-color: var(--y) var(--y) var(--y) var(--y); /* Yellow on all sides */
   }
   75% {
     border-color: transparent transparent transparent transparent; /* Move yellow to bottom */
   }
   100% {
-    border-color: yellow yellow yellow yellow; /* Move yellow to left */
+    border-color: var(--y) var(--y) var(--y)var(--y); /* Move yellow to left */
   }
 }
 
@@ -128,7 +130,7 @@ button:focus-visible {
   background-repeat: no-repeat;
   background-size: 50% 50%, 50% 50%;
   background-position: 0 0, 100% 0, 100% 100%, 0 100%;
-  background-image: linear-gradient(yellow,yellow), linear-gradient(black ,black), linear-gradient(yellow,yellow), linear-gradient(black ,black);
+  background-image: linear-gradient(var(--y),var(--y)), linear-gradient(black ,black), linear-gradient(var(--y),var(--y)), linear-gradient(black ,black);
   animation: rotate 4s linear infinite;
 }
 

@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css"
-import myImage from './assets/pngwing.com.png'
+import myImage from './assets/output-onlinepngtools.png'
 function head(){
     return (
         <>
