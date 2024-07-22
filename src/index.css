@@ -55,7 +55,7 @@ body {
   display: flex;
   justify-content: center;
   /* background-color: yellow; */
-  --y:rgb(176, 6, 243);
+  --y:yellow;
   background: transparent;
   border: 2.5px solid transparent;
   margin: 0;

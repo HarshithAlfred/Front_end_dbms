@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Container, Spinner, Alert, Button, ListGroup } from 'react-bootstrap';
 import { supabase } from '../public/super'; // Ensure this path is correct
 import './App.css';  // Make sure to include your CSS file
 
 // Main Component to display data from all tables
 function Foot() {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [employees, setEmployees] = useState([]);
   const [factories, setFactories] = useState([]);
   const [assemblyLines, setAssemblyLines] = useState([]);
@@ -13,10 +13,6 @@ function Foot() {
   const [parts, setParts] = useState([]);
   const [models, setModels] = useState([]);
   const [error, setError] = useState(null);
-
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   const fetchData = async () => {
     setIsLoading(true);
@@ -70,8 +66,9 @@ function Foot() {
       ) : error ? (
         <Alert variant="danger">{error}</Alert>
       ) : (
-        <>          <h2 className='underline-purple'>Employee Data</h2>
+        <>          
           <ListGroup>
+          <h2 className='underline-purple'>Employee Data</h2>
             {employees.map((employee) => (
               <ListGroup.Item key={employee.id}>
                 <strong>ID:</strong> {employee.id} <br />
@@ -85,8 +82,9 @@ function Foot() {
             ))}
           </ListGroup>
 
-          <h2 className='underline-purple'>Factory Data</h2>
+          
           <ListGroup>
+          <h2 className='underline-purple'>Factory Data</h2>
             {factories.map((factory) => (
               <ListGroup.Item key={factory.id}>
                 <strong>ID:</strong> {factory.id} <br />
@@ -98,8 +96,9 @@ function Foot() {
             ))}
           </ListGroup>
 
-          <h2 className='underline-purple'>Assembly Line Data</h2>
+          
           <ListGroup>
+          <h2 className='underline-purple'>Assembly Line Data</h2>
             {assemblyLines.map((line) => (
               <ListGroup.Item key={line.number}>
                 <strong>Number:</strong> {line.number} <br />
@@ -110,8 +109,9 @@ function Foot() {
             ))}
           </ListGroup>
 
-          <h2  className='underline-purple'>Vendor Data</h2>
+         
           <ListGroup>
+          <h2  className='underline-purple'>Vendor Data</h2>
             {vendors.map((vendor) => (
               <ListGroup.Item key={vendor.id}>
                 <strong>ID:</strong> {vendor.id} <br />
@@ -123,8 +123,9 @@ function Foot() {
             ))}
           </ListGroup>
 
-          <h2  className='underline-purple'>Part Data</h2>
+         
           <ListGroup>
+          <h2  className='underline-purple'>Part Data</h2>
             {parts.map((part) => (
               <ListGroup.Item key={part.id}>
                 <strong>Number:</strong> {part.part_number} <br />

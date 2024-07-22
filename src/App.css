@@ -29,7 +29,7 @@ label{
     outline: none;
 }
 #root{
-    --y:rgb(176, 6, 243);
+    --y:yellow;
 }
 .underline-purple {
     text-underline-offset: 3px;
@@ -50,7 +50,7 @@ label{
 }
 .btn-primary:active{
     border: 1px solid var(--y);
-    background-color:rgb(176, 6, 243);;
+    background-color:yellow;;
     --y:#333435;
     color:  #333435;
 }
